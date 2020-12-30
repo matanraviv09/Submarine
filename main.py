@@ -1,9 +1,9 @@
 from battle_ship import *
-from battle_ship.battle_ship_client import BattleShipClientP2P, ShipMap
+from battle_ship.battle_ship_client import BattleShipServer, BattleShipClient, ShipMap
 
 
 def main():
-    cl = BattleShipClientP2P('127.0.0.1', 8000)
+    cl = BattleShipClient('127.0.0.1', 8000)
 
     print(cl.ship_board)
 

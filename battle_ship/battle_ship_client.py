@@ -37,8 +37,6 @@ def play_turn(sock: socket.socket):
         sock.send(battle_ship.Guess(x, y).pack())
         result_struct = battle_ship.Result.load(sock.recv(1024))
         result, sub_length = result_struct.result_code, result_struct.sub_length
-        sock.send(battle_ship.Acknowledge.load_from_result(result_struct))
-
         print(MSG_LIST[result])
         return result
 
@@ -69,7 +67,7 @@ def recv_with_error_handle(sock: socket.socket):
 
 class BattleShipClient:
 
-    def __init__(self, port, address, size_of_world=SIZE_OF_WORLD):
+    def __init__(self, address, port, size_of_world=SIZE_OF_WORLD):
         """
 
         :param size_of_world: size of world
@@ -135,35 +133,3 @@ class BattleShipClient:
             if not recv_msg or result_code != battle_ship.Acknowledge.load(recv_msg).result_code:
                 raise WrongPacketSyntaxError
 
-
-class BattleShipServer:
-
-    def __init__(self, port, size_of_world=SIZE_OF_WORLD):
-        """
-
-        :param size_of_world: size of world
-        """
-        self.ships = []
-
-        self.ship_board = ShipMap(size_of_world)
-
-        self.port = port
-
-        self.did_win = False
-
-        self.server_socket = socket.socket()
-        self.socket = None
-        self.init_game()
-
-    def init_game(self):
-        """
-
-        :return:
-        """
-        self.server_socket.bind(('0.0.0.0', self.port))
-        self.server_socket.listen(1)
-        self.socket, _ = self.server_socket.accept()
-
-      """
-      finish server flow
-      """
