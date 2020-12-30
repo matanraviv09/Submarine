@@ -9,7 +9,7 @@ SINK_REQUEST_CODE = 3
 
 
 class Result(BaseRequest):
-    REQUEST_TYPE = RequestsTypes.GUESS
+    REQUEST_TYPE = RequestsTypes.RESULT
 
     def __init__(self, result_code: int, sub_length: int = None):
         """
@@ -34,7 +34,7 @@ class Result(BaseRequest):
         return MAGIC + bytes(self.REQUEST_TYPE) + self.result_code_bytes + self.sub_length_bytes
 
     @classmethod
-    def load(cls, data: bytes) -> BaseRequest:
+    def load(cls, data: bytes):
         """
         load a packed packet
         :return:

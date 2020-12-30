@@ -30,7 +30,16 @@ class IllegalCoordinateError(Exception):
         return "Wrong Request Type"
 
 
-class NoShipSizeError(Exception):
+class WrongPacketSyntaxError(Exception):
+    """
+    Raise when the packet is not built correctly
+    """
+
+    def __str__(self):
+        return "packet was not built correctly"
+
+
+class NoShipSizeError(WrongPacketSyntaxError):
     """
     Raise when no ship size is given inside the result packet
     """

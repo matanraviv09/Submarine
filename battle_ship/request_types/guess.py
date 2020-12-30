@@ -33,7 +33,7 @@ class Guess(BaseRequest):
         return MAGIC + bytes(self.REQUEST_TYPE) + self.coordinates
 
     @classmethod
-    def load(cls, data: bytes) -> BaseRequest:
+    def load(cls, data: bytes):
         """
         load a packed packet
         :return:

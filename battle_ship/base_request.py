@@ -28,9 +28,20 @@ def validate_magic(magic_sequence: bytes):
         raise WrongMagicError
 
 
+def load_request(data: bytes):
+    """
+
+    :param data: data of packet
+    :return:
+    """
+    request_id = data[MAGIC_LENGTH]
+    request_class = BaseRequest.all_request_type_classes[request_id]
+    return request_class.load(data)
+
+
 class BaseRequest(ABC):
     REQUEST_TYPE = None
-    all_request_type_classes = []
+    all_request_type_classes = {}
 
     def __init_subclass__(cls, **kwargs):
         """
@@ -38,7 +49,7 @@ class BaseRequest(ABC):
         :param kwargs:
         :return:
         """
-        BaseRequest.all_request_type_classes.append(cls)
+        BaseRequest.all_request_type_classes[cls.REQUEST_TYPE.value] = cls
 
     @abstractmethod
     def pack(self):

@@ -23,7 +23,7 @@ class GameReply(BaseRequest):
         return MAGIC + bytes(self.REQUEST_TYPE) + self.response
 
     @staticmethod
-    def load(data: bytes) -> BaseRequest:
+    def load(data: bytes):
         """
         load a packed packet
         :return:
